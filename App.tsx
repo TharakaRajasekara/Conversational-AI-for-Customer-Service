@@ -20,7 +20,18 @@ const App: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    chatRef.current = startChat();
+    try {
+      chatRef.current = startChat();
+    } catch (error) {
+      console.error(error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          role: MessageRole.ERROR,
+          text: "Configuration error: Could not connect to the AI service. If you are the developer, please ensure the API key is configured correctly.",
+        },
+      ]);
+    }
   }, []);
 
   useEffect(() => {
@@ -55,7 +66,10 @@ const App: React.FC = () => {
         {isLoading && <TypingIndicator />}
         <div ref={messagesEndRef} />
       </div>
-      <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      <MessageInput
+        onSendMessage={handleSendMessage}
+        isLoading={isLoading || !chatRef.current}
+      />
     </div>
   );
 };
