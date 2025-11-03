@@ -1,0 +1,5 @@
+{
+  "name": "Conversational AI for Customer Service",
+  "description": "An intelligent chatbot and virtual assistant capable of handling customer queries with human-like responsiveness, powered by the Gemini API.",
+  "requestFramePermissions": []
+}
